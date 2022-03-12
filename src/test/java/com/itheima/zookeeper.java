@@ -16,8 +16,8 @@ public class zookeeper {
     public void testCreateNodeData01() throws Exception {
         //1. 创建一个空节点(a)（只能创建一层节点）
         //2. 创建一个有内容的b节点（只能创建一层节点）
-        //3. 创建持久节点，同时创建多层节点
-        //4. 创建带有的序号的持久节点
+
+
         //5. 创建临时节点（客户端关闭，节点消失），设置延时5秒关闭（Thread.sleep(5000)）
         //6. 创建临时带序号节点（客户端关闭，节点消失），设置延时5秒关闭（Thread.sleep(5000)）
 
@@ -37,7 +37,12 @@ public class zookeeper {
         //启动客户端
         client.start();
         //使用客户端
-        client.create().forPath("/curator");
+        //client.create().forPath("/curator");
+        //3. 创建持久节点，同时创建多层节点
+        //client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/app1/a", "hello".getBytes());
+        //4. 创建带有的序号的持久节点
+        client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath("/app2", "hello world".getBytes());
+
         //关闭客户端
         client.close();
     }
